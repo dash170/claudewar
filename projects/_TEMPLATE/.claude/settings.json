@@ -1,0 +1,101 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Edit",
+      "Write",
+      "MultiEdit",
+      "Bash(git status*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Bash(git checkout*)",
+      "Bash(git stash*)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(node *)",
+      "Bash(python *)",
+      "Bash(pip *)",
+      "Bash(pytest*)",
+      "Bash(cargo *)",
+      "Bash(go *)",
+      "Bash(ls*)",
+      "Bash(mkdir *)",
+      "Bash(echo *)",
+      "PowerShell"
+    ],
+    "deny": [
+      "Bash(rm -rf*)",
+      "Bash(rm -fr*)",
+      "Bash(rm -r -f*)",
+      "Bash(rm -f -r*)",
+      "Bash(find * -delete*)",
+      "Bash(*shutil.rmtree*)",
+      "Bash(git reset --hard*)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(* DROP *)",
+      "Bash(*drop table*)",
+      "Bash(*DROP TABLE*)",
+      "Bash(*Drop Table*)",
+      "Bash(* TRUNCATE *)",
+      "Bash(*truncate table*)",
+      "Bash(*prod-deploy*)",
+      "Bash(vercel*--prod*)",
+      "Bash(wrangler deploy*)",
+      "Bash(netlify deploy*)",
+      "Bash(*kubectl apply*)",
+      "Bash(cat *.env*)",
+      "Bash(cat *secret*)",
+      "Bash(cat *.pem)",
+      "Bash(cat *id_rsa*)",
+      "Bash(type *.env*)",
+      "Bash(head *.env*)",
+      "Bash(tail *.env*)",
+      "Bash(less *.env*)",
+      "Bash(more *.env*)",
+      "Bash(cp *.env*)",
+      "Bash(*Get-Content*env*)",
+      "Bash(*Get-Content*secret*)",
+      "Bash(taskkill /IM*)",
+      "Bash(taskkill /im*)",
+      "Bash(taskkill /F /IM*)",
+      "Bash(pkill*)",
+      "Bash(killall*)",
+      "PowerShell(*Get-Content*env*)",
+      "PowerShell(*Get-Content*secret*)",
+      "PowerShell(*gc *.env*)",
+      "PowerShell(Stop-Process -Name*)",
+      "PowerShell(Get-Process*Stop-Process*)",
+      "Read(./**/*secret*)",
+      "Read(./**/*.env)",
+      "Read(./**/*.pem)",
+      "Read(./**/id_rsa*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/safety_gate.js"
+          }
+        ]
+      }
+    ]
+  },
+  "disableBypassPermissionsMode": "disable",
+  "sandbox": {
+    "network": {
+      "allowedDomains": []
+    }
+  },
+  "_notes": "TWO enforcement layers now ship, not one. (1) deny{} = literal-prefix denylist, fast but POROUS (casing/alternate-commands/quoting slip past) — kept as cheap first pass. (2) hooks.PreToolUse -> .claude/hooks/safety_gate.js = the real SEMANTIC gate: it inspects the actual tool call and blocks the one-way-door classes regardless of spelling — secret exfil (.env/secret/.pem/key/id_rsa via Read OR any shell verb incl. curl/scp/cp upload), irreversible destruction (rm -rf any-flag-order / force-push / reset --hard / DROP|TRUNCATE / recursive delete), prod-deploy+on-chain (vercel --prod / wrangler|netlify|firebase deploy / kubectl apply / terraform apply|destroy / npm publish / cast send / solana transfer), and kill-by-name (rail #12). It fails-OPEN on parse error (exit 0) so a hook bug can never brick a build; the deny-set still catches literals underneath. Tested block/allow/garbage before shipping (this is a LIVE hook, not a dead reference — the old 'hooks omitted by design' note is retired for the safety layer). allow{} ships a SAFE baseline so the non-stop builder loop doesn't stall on every tool call; the generator ADDS the type's extra hosts/tools at MATERIALIZE. allowedDomains starts EMPTY (no network) — the generator MUST scope it to the type's real API hosts; TIGHTEN asserts no {{placeholder}} survives."
+}

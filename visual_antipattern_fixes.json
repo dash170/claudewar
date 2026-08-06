@@ -1,0 +1,17 @@
+[
+ "PERCEPTION CANARY FIRST: prove the model SEES canary.png (verbatim secret token) or the gate is VOID (PERCEPTION-BLIND), never PASS. The native Read->vision channel is documented-unreliable (issues #36488/#35866/#18588) and is exactly where the 'it looks good' lie is born.",
+ "DESCRIBE-BEFORE-JUDGE: force enumeration of every text string/object/layout region FIRST, verdict withheld until the description is committed. Collapses most false PASSes (SGV / See-It-Say-It-Sorted).",
+ "REFUTE-BIAS / ASSUME-BROKEN: prompt 'this artifact is BROKEN, list and LOCALIZE every defect (bbox/quote/frame_ts)' — never the open-ended 'is this good?' that invites the lie. Requiring localization collapses bluffing.",
+ "REFERENCE-ANCHOR: when a golden/spec exists, give both and ask 'spot the differences' (grounded), and gate on a deterministic odiff/diff-pdf/VMAF NUMBER before/instead of opinion.",
+ "SEPARATE CRITIC: grade in a fresh claude -p (or local VLM) with ZERO build context. The model that wrote the code must not be the sole judge of its own render — self-grading is the lie's origin.",
+ "DEFAULT-FAIL + MEASURABLE PASS-CRITERION: PASS only if every rubric item is affirmatively confirmed defect-free; the criterion is a number/checklist, not a vibe.",
+ "PASS/FAIL/UNCERTAIN with UNCERTAIN BLOCKING completion (escalate: re-capture / multi-sample vote / human). Uncertainty is not a green light.",
+ "FALSE-CONFIDENCE-TEST: inject a planted 'the developer says this is correct'; if the judge caves it is sycophantic -> distrust the verdict.",
+ "SETTLED-FRAME GUARANTEE: signal-then-stability oracle (never sleep); CAPTURE_UNSTABLE / BLACK_FRAME / STATE_UNDRIVEN are FAILs that block the judge — no certifying a pre-render blank, loading placeholder, or undrawn WebGL/canvas.",
+ "STATE + ENVIRONMENT MATRIX: drive modal/hover/scrolled/empty/error states and viewport x theme x DPI x client configs from a manifest; one config OK != all OK. Only FAILING configs surface (one diff-crop each) to keep it efficient.",
+ "DETERMINISTIC-FIRST, VLM-SECOND: hard-FAIL anything a number proves (bbox-overflow, OCR-vs-source mismatch, pixel-diff%, mesh-not-watertight, navmesh-disconnected, black-frame brightness, mesh-scale) before asking any model — removes Claude's discretion on cheap-to-check failures.",
+ "SELF-CONSISTENCY / SWAP-EVAL: judge the same view twice with swapped framing ('list defects' vs 'PASS/FAIL only'); disagreement -> escalate, never silently pass.",
+ "STRUCTURED VERDICT ONLY: JSON {verdict, defects[{what,where,severity}], evidence_view, rubric_checked}; the builder must paste the diagnostic view + the numbers, never a free-form 'looks good'.",
+ "RIGHT VIEW NOT MORE VIEWS: one diagnostic view that makes the defect class visible (grazing-angle texture, foot-on-grid contact-sheet, face-normal-RGB mesh grid, caption-timestamp frame) beats 500 beauty shots; capture cost should never excuse skipping the gate.",
+ "RIGHT METRIC FOR THE DEFECT: NIQE/BRISQUE are blind to semantic artifacts (extra limbs/garbled text) -> use CLIP-IQA; pixel-diff only catches REGRESSIONS (needs a baseline) -> first-render uses the adversarial VLM + content anchors; avoid S-Lab non-commercial DOVER/FAST-VQA in shipped tooling."
+]

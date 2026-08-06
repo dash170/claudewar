@@ -1,0 +1,50 @@
+[
+ {
+  "capability": "text->image (sprites, icons, textures, key art)",
+  "freeStack": "ComfyUI (https://github.com/comfyanonymous/ComfyUI) backplane running SDXL (OpenRAIL++) / Flux.1-schnell (Apache-2.0, commercial-safe) / Flux.1-dev (non-commercial) + LoRA/ControlNet/IPAdapter for pose/style lock -> latent upscale -> PNG. Default image node; one ComfyUI server reused for 3D+video. License gate: monetized output -> Flux-schnell, never Flux-dev."
+ },
+ {
+  "capability": "image->3D & text->3D (game/product mesh + PBR)",
+  "freeStack": "TRELLIS (MIT, https://github.com/microsoft/TRELLIS) + Hunyuan3D-2.1 (open weights, production PBR) + InstantMesh -> Blender headless decimate/retopo + UV atlas + iso-render. Chains AFTER text->image for controllable silhouette; replaces paid Meshy. Gap: gen-mesh topology is not quad-clean for animation (semi-manual retopo)."
+ },
+ {
+  "capability": "video (clips, trailers, loops, anim)",
+  "freeStack": "Wan2.2 (Apache-2.0, 5B runs on a 4090; https://github.com/Wan-Video/Wan2.2; Wan2GP repack for low-VRAM) + LTX-Video + AnimateDiff (cheapest, consumer-GPU) + ffmpeg cut/mux. VRAM router: Wan-14B big GPU -> LTX/AnimateDiff small so the request degrades gracefully."
+ },
+ {
+  "capability": "audio & music (BGM, SFX, stingers)",
+  "freeStack": "AudioCraft/MusicGen+AudioGen (Meta MIT code, weights CC-BY-NC non-commercial) + Stable Audio Open 1.0 (commercial-safe, 47s 44.1kHz; https://github.com/facebookresearch/audiocraft) -> loop-trim + normalize. License gate: monetized -> Stable Audio Open; internal drafts -> MusicGen."
+ },
+ {
+  "capability": "voice / TTS (narration, VO, i18n EN/FR/ZH/PT/ES)",
+  "freeStack": "Chatterbox (MIT zero-shot clone+emotion; https://github.com/resemble-ai/chatterbox) + F5-TTS + Piper (tiny CPU, bulk) + Coqui-TTS -> loudness-normalize -> forced-align for captions. Piper for high-volume; Chatterbox/F5 for identity. GATE: voice-clone consent + deepfake policy."
+ },
+ {
+  "capability": "speech->text (transcription, captions, voice intake)",
+  "freeStack": "Whisper (MIT) via faster-whisper (CTranslate2, 4x faster; https://github.com/SYSTRAN/faster-whisper) or whisper.cpp (CPU/Metal) -> word-timestamps -> forced-align for kinetic captions/SRT. Closes the AV loop (TTS out <-> STT back for QA)."
+ },
+ {
+  "capability": "rigging & animation (static mesh -> animated avatar)",
+  "freeStack": "UniRig (SIGGRAPH 2025 auto skeleton+skin; https://github.com/VAST-AI-Research/UniRig) + Mixamo (free auto-rig + humanoid motion) + Blender retarget. HARD LIMIT: UniRig rigs but authors NO motion -- creature/non-biped locomotion + text->motion remain a WALL."
+ },
+ {
+  "capability": "asset conditioning (cutout/upscale/conform -- mandatory post node)",
+  "freeStack": "rembg (https://github.com/danielgatis/rembg) + SAM 2 + Real-ESRGAN/4x-UltraSharp + Pillow/Blender. EVERY image/3D-render output passes through before acceptance; enforces the per-project art contract (size/anchor/transparency/palette lock, e.g. foot=41). CPU-capable."
+ },
+ {
+  "capability": "asset-QA accept/reject gate (ORIGINAL build, no turnkey free)",
+  "freeStack": "CLIP-score + aesthetic predictor + local-LLM-judge (Ollama) + spec-conformance check. Without it the resolver floods projects with off-spec gens and fails the 'does it please' bar. Build as a CLAUDEWAR reject/accept harness."
+ },
+ {
+  "capability": "web scraping & data acquisition",
+  "freeStack": "crawl4ai (LLM-ready markdown; https://github.com/unclecode/crawl4ai) + Playwright (JS/anti-bot) + Scrapy (scale) + trafilatura (JSON-LD review channel). Scrapers are PROJECT deliverables, not the agent's fetch path (agent browses via WebSearch/WebFetch only). Centralize a polite rate-limit/robots wrapper; datacenter IPs get blocked."
+ },
+ {
+  "capability": "ML training & finetune (brand/style/voice identity lock)",
+  "freeStack": "kohya_ss LoRA/DreamBooth for SDXL/Flux (https://github.com/bmaltais/kohya_ss) + HF Diffusers/PEFT; Unsloth (low-VRAM QLoRA) + Axolotl for LLM. Curate 15-50 on-brand refs -> caption -> train LoRA (~10-30min) -> drop into ComfyUI so ALL gen nodes emit on-identity (fixes 'facade=no-identity')."
+ },
+ {
+  "capability": "local LLM inference (free text/codegen + LLM-judge)",
+  "freeStack": "Ollama (https://github.com/ollama/ollama) / llama.cpp (GGUF CPU+Metal+CUDA) / vLLM (GPU throughput) running Llama/Qwen/Mistral/DeepSeek/Gemma -> OpenAI-compatible local endpoint. Routes high-volume/low-stakes calls (classification, asset-QA scoring, pain-classify, grounding critique) OFF the paid Claude quota -- serves the token-economy rule."
+ }
+]

@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+venv/
+
+# Your own projects stay private. Only the template and this README ship.
+projects/*
+!projects/README.md
+!projects/_TEMPLATE/

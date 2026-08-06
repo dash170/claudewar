@@ -1,0 +1,37 @@
+[
+ {
+  "_doctrine": "Model tier = OPUS by default for EVERY role (CANON #4 / doctrine #4 supersedes all older Haiku/Sonnet router language in this tree). A role may drop to a smaller model ONLY for a genuinely-trivial sub-call, logged. The tiers below were flipped to Opus 2026-07-17; the old wshobson Haiku/Sonnet/Opus router is SUPERSEDED."
+ },
+ {
+  "type": "web-app / SaaS",
+  "roster": "lead (Opus) + architect (Opus) + builder (Opus) + code-reviewer (Opus) + QA/Playwright-smoke (Opus) + devops (Opus); CONDITIONAL: security-reviewer (Opus) only if auth/payments/PII, HUMAN-lens product critic (Opus) at concept + each shippable slice. TOPOLOGY: orchestrator-workers in sequential waves, with an evaluator-optimizer inner gate (builder <-> code-reviewer <-> QA). Low-complexity CRUD collapses to rung-1 (builder + reviewer)."
+ },
+ {
+  "type": "game",
+  "roster": "lead (Opus) + systems-designer (Opus) + art-director (Opus, -> free-gen resolver) + builder (Opus) + playtester (Opus, live cvars+logs) + perf-reviewer (Opus, 3D-game perf mandate) + HUMAN-lens FUN-gate critic (Opus, web-enabled: GEQ + SteamDB benchmark) + capability-resolver (Opus). TOPOLOGY: orchestrator-workers; creative pillar (design+art) runs PARALLEL to the build pillar; an evaluator-optimizer FUN GATE wraps each slice. Largest roster (rung 3)."
+ },
+ {
+  "type": "trading / quant",
+  "roster": "lead (Opus) + data-engineer (Opus, leak-free harness) + quant-implementer/builder (Opus) + falsification-quant/bear (Opus, default NO-EDGE, strategy-validator skills) + risk-manager (Opus) + security-reviewer (Opus, keys/burner). NO art-director, NO HUMAN-lens (skip for internals). TOPOLOGY: prompt-chain (hypothesis -> leak-free data -> vectorized backtest+costs -> robustness WFE/DSR/CPCV/regime -> paper-forward) wrapped in evaluator-optimizer where the bear is the adversarial critic that must sign off before risk-manager allows any capital."
+ },
+ {
+  "type": "data-automation / ETL",
+  "roster": "lead (Opus) + data-engineer (Opus) + builder (Opus) + contract-tester/QA (Opus, Great Expectations) + devops (Opus, orchestration/alerting); code-reviewer folded into the lead at low complexity. TOPOLOGY: prompt-chain (extract -> transform -> validate -> orchestrate) with an evaluator-optimizer idempotency gate. Frequently rung 0-1 (solo or builder+critic)."
+ },
+ {
+  "type": "content / marketing site",
+  "roster": "lead (Opus) + art-director (Opus, binds awwwards-site skill + free-gen heroes) + builder (Opus, Next.js static export) + HUMAN-lens market-empathy critic (Opus, 'not-AI-looking' + Desirability reaction cards) + perf/a11y QA (Opus, Lighthouse) + capability-resolver (Opus, image/video/voice). TOPOLOGY: evaluator-optimizer as primary (builder <-> art-director judge until it clears the Awwwards bar); orchestrator-workers only if multi-asset."
+ },
+ {
+  "type": "research / analysis",
+  "roster": "lead/orchestrator (Opus) + N fan-out searchers (Opus, parallel, summary-only returns) + adversarial verifier (Opus, distinct from the drafters) + synthesizer (the lead). Binds the deep-research skill. TOPOLOGY: orchestrator-workers + evaluator-optimizer (verifier), gated behind value >= 15x -- the one type where parallel fan-out is the canonical Anthropic shape."
+ },
+ {
+  "type": "infra-devops",
+  "roster": "lead (Opus) + architect/platform (Opus, IaC + topology + network/cost budget) + builder (Opus, Terraform/Ansible/k8s manifests) + security-reviewer (Opus, secrets/IAM/least-privilege, HARD gate on any prod-touching change) + QA/contract-tester (Opus, smoke + drift detection) + devops/SRE (Opus, CI + rollback + alerting). NO art-director, NO HUMAN-lens. TOPOLOGY: prompt-chain (design -> IaC -> validate/plan -> apply-gated) wrapped in an evaluator-optimizer where security-reviewer must sign off before any apply/deploy; irreversible ops (apply, deploy, DNS/cert) are owner-gated per CONSTITUTION rail #2."
+ },
+ {
+  "type": "other",
+  "roster": "DERIVE a minimal COVERING set from machine_roleLibrary.json: always lead (Opus) + builder (Opus) + a SEPARATE critic (Opus, code-reviewer or domain critic across the context seam) + QA/grounding-owner (Opus); ADD a HUMAN-lens critic (Opus, web-enabled) if the artifact is human-facing, a security-reviewer (Opus) if it touches money/keys/auth, and a falsification-quant (Opus) if it makes a predictive/edge claim. TOPOLOGY: default orchestrator-workers with an evaluator-optimizer gate; collapse to rung 0-1 (solo or builder+critic) when genuinely simple. Maker + independent critic + human-lens-where-human-facing is the invariant."
+ }
+]

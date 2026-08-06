@@ -1,0 +1,11 @@
+# Visual-gate Python deps — pin so the gate is REBUILDABLE on any machine
+# instead of assuming one project's interpreter (<PYTHON_VENV>).
+# Setup on a fresh machine:
+#   python -m venv .venv && .venv\Scripts\python -m pip install -r requirements.txt
+# then point the runbook / GATE scripts at .venv\Scripts\python.exe.
+# System deps NOT installable via pip (install separately): ffmpeg, tesseract-ocr.
+Pillow>=10.0
+PyMuPDF>=1.24
+pytesseract>=0.3.10
+pdf2image>=1.17
+numpy>=1.26

@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/authoring_gate.js"
+          }
+        ]
+      }
+    ]
+  },
+  "_notes": "Root (prompt-AUTHOR) settings. The UserPromptSubmit hook re-injects CLAUDE.md's 6-step generator + hard DoD gates whenever a prompt reads as project-authoring, converting 'prose the model may skip' into context it re-sees. The hook is fully defensive (any error -> exit 0, emits nothing) so it can never block a prompt. This is the AUTHOR layer; materialized BUILDER projects get their own _TEMPLATE/.claude/settings.json (deny-set + scoped allow{})."
+}
