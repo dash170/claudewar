@@ -4,6 +4,13 @@
 
 Most agent setups fail the same way: someone writes a paragraph of intent, the agent starts coding immediately, and forty minutes later it reports success from inside the same context that produced the failure. claudewar puts a **manufacturing process** in front of that — the prompt is a deliverable with its own definition of done, its own quality gate, and its own retro.
 
+**Start here:** [`examples/subtitle-converter/`](examples/subtitle-converter) is a finished project the machine would hand to a builder — read in ten minutes, runs in sixty seconds, zero dependencies.
+
+```bash
+cd examples/subtitle-converter && bash init.sh    # 21/21 passed, 0 failed
+node ../../tests/eval_prompt.js . --gate 85       # 100/100  ✓ all checks
+```
+
 ---
 
 ## The core idea: split the author from the builder
@@ -289,6 +296,7 @@ skills/prompt-master/           the loop + self-improvement + imagination mode
 visual_gate/                    GATE_PROMPT.md is the keystone
 workflows/study-project.js      step-2 deep study
 projects/_TEMPLATE/             copy this to start
+examples/subtitle-converter/    a finished project, scores 100/100, runs in 60s
 tests/                          the prompt eval gate + the safety-hook tests
 references/LESSONS.md           append-only retro memory
 ```

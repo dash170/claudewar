@@ -1,0 +1,1 @@
+{"gate":"WHEN the assertion suite is run over the fixture corpus THE SYSTEM SHALL convert SRT<->WebVTT with byte-identical reference output, millisecond-exact timing and every skipped block reported, at zero failing assertions","signal":"node test/convert.test.js","value":"21/21 passed, 0 failed","green":true,"evidence":"RESULTS.json","ts":"2026-08-06T20:36:00Z"}

@@ -96,9 +96,17 @@ const gateIdx = args.indexOf("--gate");
 const threshold = gateIdx >= 0 ? Number(args[gateIdx + 1]) : null;
 const targetArg = args.find((a) => !a.startsWith("--") && a !== String(threshold));
 
+// Resolve a target against the CURRENT directory first (so it works from inside
+// a project dir), falling back to repo-root-relative for `projects/<name>` calls.
+function resolveTarget(arg) {
+  const fromCwd = path.resolve(process.cwd(), arg);
+  if (exists(path.join(fromCwd, "PROJECT_OPERATING_PROMPT.md"))) return fromCwd;
+  return path.resolve(ROOT, arg);
+}
+
 let targets;
 if (targetArg) {
-  targets = [path.resolve(ROOT, targetArg)];
+  targets = [resolveTarget(targetArg)];
 } else {
   const pdir = path.join(ROOT, "projects");
   targets = fs.readdirSync(pdir)
@@ -136,7 +144,7 @@ if (vals.length >= 2) {
 
 // gate mode
 if (threshold != null && targetArg) {
-  const r = rows.find((x) => x.name === path.basename(path.resolve(ROOT, targetArg)));
+  const r = rows.find((x) => x.name === path.basename(resolveTarget(targetArg)));
   if (!r) { console.log(`\n  gate: target not found`); process.exit(1); }
   const ok = r.total >= threshold;
   console.log(`\n  GATE: ${r.name} scored ${r.total}, threshold ${threshold} → ${ok ? "PASS" : "FAIL"}`);

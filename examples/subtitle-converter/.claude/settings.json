@@ -1,0 +1,81 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Edit",
+      "Write",
+      "MultiEdit",
+      "Bash(git status*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(node *)",
+      "Bash(bash verify.sh*)",
+      "Bash(bash init.sh*)",
+      "Bash(ls*)",
+      "Bash(mkdir *)",
+      "Bash(echo *)",
+      "PowerShell"
+    ],
+    "deny": [
+      "Bash(rm -rf*)",
+      "Bash(rm -fr*)",
+      "Bash(rm -r -f*)",
+      "Bash(rm -f -r*)",
+      "Bash(find * -delete*)",
+      "Bash(*shutil.rmtree*)",
+      "Bash(git reset --hard*)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(npm publish*)",
+      "Bash(* DROP *)",
+      "Bash(*drop table*)",
+      "Bash(*DROP TABLE*)",
+      "Bash(* TRUNCATE *)",
+      "Bash(*prod-deploy*)",
+      "Bash(cat *.env*)",
+      "Bash(cat *secret*)",
+      "Bash(cat *.pem)",
+      "Bash(cat *id_rsa*)",
+      "Bash(type *.env*)",
+      "Bash(head *.env*)",
+      "Bash(tail *.env*)",
+      "Bash(cp *.env*)",
+      "Bash(*Get-Content*env*)",
+      "Bash(*Get-Content*secret*)",
+      "Bash(taskkill /IM*)",
+      "Bash(taskkill /im*)",
+      "Bash(pkill*)",
+      "Bash(killall*)",
+      "PowerShell(*Get-Content*env*)",
+      "PowerShell(Stop-Process -Name*)",
+      "PowerShell(Get-Process*Stop-Process*)",
+      "Read(./**/*secret*)",
+      "Read(./**/*.env)",
+      "Read(./**/*.pem)",
+      "Read(./**/id_rsa*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/safety_gate.js"
+          }
+        ]
+      }
+    ]
+  },
+  "disableBypassPermissionsMode": "disable",
+  "sandbox": {
+    "network": {
+      "allowedDomains": []
+    }
+  },
+  "_notes": "Scoped for a zero-dependency Node CLI. allow{} is deliberately NARROWER than the _TEMPLATE baseline: no npm/pip/cargo/go, because this project installs nothing and a builder that reaches for a package manager here has drifted from the brief. allowedDomains is EMPTY and that is the correct final value, not an unfilled placeholder — the project makes no network calls, so the sandbox denies all of them. Two enforcement layers ship: deny{} is a fast literal-prefix pass (porous by nature — casing and alternate spellings slip past), and hooks.PreToolUse -> .claude/hooks/safety_gate.js is the real semantic gate that inspects the actual tool call and blocks the one-way-door classes regardless of spelling. It fails OPEN on a parse error so a hook bug can never brick a build."
+}
